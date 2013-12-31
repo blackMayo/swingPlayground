@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,16 +72,19 @@ public class Swing_Playground {
       imageBoundary.draw((Graphics2D) g);
     }
 
-    private static class ResizedImage {
+    private class ResizedImage implements MouseMotionListener {
       private double newWidth;
       private double newHeight;
       private final BufferedImage image;
       private Rectangle boundary;
       private Rectangle resizedBoundary;
+      private boolean mouseHasEnteredRectangle;
+
 
       public ResizedImage(BufferedImage image, Rectangle boundary) {
         this.image = image;
         this.boundary = boundary;
+        addMouseMotionListener(this);
       }
 
 
@@ -139,6 +144,30 @@ public class Swing_Playground {
         return new Rectangle(calculateXCoordinate(), calculateYCoordinate(), (int) Math.round(newWidth),
             (int) Math.round(newHeight));
       }
+
+      @Override
+      public void mouseDragged(MouseEvent e) {
+      }
+
+      @Override
+      public void mouseMoved(MouseEvent mouseEvent) {
+        mouseHasEnteredRectangle = isMousePositionInsideOfRectangle(mouseEvent);
+      }
+
+      private boolean isMousePositionInsideOfRectangle(MouseEvent mouseEvent) {
+        return isMousePositionWithinRangeOfXAxes(mouseEvent.getX()) &&
+            isMousePositionWithinRangeOfYAxes(mouseEvent.getY());
+      }
+
+      private boolean isMousePositionWithinRangeOfYAxes(int mousePositionOnYAxis) {
+        return (mousePositionOnYAxis >= imageBoundary.getY()) &&
+            (mousePositionOnYAxis <= (imageBoundary.getY() + imageBoundary.getHeight()));
+      }
+
+      private boolean isMousePositionWithinRangeOfXAxes(int mousePositionOnXAxis) {
+        return (mousePositionOnXAxis >= imageBoundary.getX()) &&
+            (mousePositionOnXAxis <= (imageBoundary.getX() + imageBoundary.getWidth()));
+      }
     }
 
     private static class ImageBoundary {
@@ -158,6 +187,25 @@ public class Swing_Playground {
 
       private Rectangle getRectangleAroundImage() {
         return resizedImage.getResizedBoundary();
+      }
+
+      /*
+      Getters for some properties of the image boundary rectangle
+       */
+      public int getX() {
+        return getRectangleAroundImage().x;
+      }
+
+      public int getY() {
+        return getRectangleAroundImage().y;
+      }
+
+      public double getHeight() {
+        return getRectangleAroundImage().getHeight();
+      }
+
+      public double getWidth() {
+        return getRectangleAroundImage().getWidth();
       }
     }
   }
