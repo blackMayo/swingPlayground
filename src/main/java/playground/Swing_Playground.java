@@ -19,7 +19,7 @@ import javax.swing.WindowConstants;
  * User: ioanna
  * Date: 2013/11/22  23:59
  */
-public class Playground1 {
+public class Swing_Playground {
 
 
   public static void main(String[] args) throws IOException {
@@ -50,7 +50,7 @@ public class Playground1 {
     }
 
     private BufferedImage getLeftImage() throws IOException {
-      try(InputStream input = getClass().getResourceAsStream("/main/resources/images/MyrtosBeach.JPG")){
+      try (InputStream input = getClass().getResourceAsStream("/main/resources/images/MyrtosBeach.JPG")) {
         BufferedImage leftImage = ImageIO.read(input);
         return leftImage;
       }
@@ -79,19 +79,20 @@ public class Playground1 {
 
       public ResizedImage(BufferedImage image, Rectangle boundary) {
         this.image = image;
-        this.boundary=boundary;
+        this.boundary = boundary;
       }
 
 
       public void draw(Graphics2D g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
-        calculateNewImageSize();
         drawResizedImage(g2);
       }
 
       private void updateBoundary(Rectangle boundary) {
         this.boundary = boundary;
+
+        calculateNewImageSize();
         resizedBoundary = getResizedBoundary();
       }
 
@@ -127,15 +128,16 @@ public class Playground1 {
       }
 
       private double getImageRatio() {
-        return (double) image.getWidth()/ image.getHeight();
+        return (double) image.getWidth() / image.getHeight();
       }
 
       private double getTargetRatio() {
-        return (double)boundary.width / boundary.height;
+        return (double) boundary.width / boundary.height;
       }
 
       public Rectangle getResizedBoundary() {
-        return new Rectangle(calculateXCoordinate(), calculateYCoordinate(), (int) Math.round(newWidth), (int) Math.round(newHeight));
+        return new Rectangle(calculateXCoordinate(), calculateYCoordinate(), (int) Math.round(newWidth),
+            (int) Math.round(newHeight));
       }
     }
 
