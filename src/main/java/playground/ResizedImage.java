@@ -5,22 +5,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
-/**
-* Copyright (c) GMX GmbH, Muenchen, 2014. All rights reserved.
-* <p/>
-*
-* @author Ioanna Vletsou ioanna.vletsou@1und1.de
-*/
 class ResizedImage {
   private double newWidth;
   private double newHeight;
   private final BufferedImage image;
   private Rectangle boundary;
   private Rectangle resizedBoundary;
-  private JFrame parentFrame;
 
-  public ResizedImage(JFrame parentFrame, BufferedImage image, Rectangle boundary) {
-    this.parentFrame = parentFrame;
+  public ResizedImage(BufferedImage image, Rectangle boundary) {
     this.image = image;
     this.boundary = boundary;
   }

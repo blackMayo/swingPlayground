@@ -5,19 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
 
-/**
-* Copyright (c) GMX GmbH, Muenchen, 2014. All rights reserved.
-* <p/>
-*
-* @author Ioanna Vletsou ioanna.vletsou@1und1.de
-*/
 class ImageBoundary {
 
   private final ResizedImage resizedImage;
-  private JFrame parentFrame;
 
-  public ImageBoundary(JFrame parentFrame, ResizedImage resizedImage) {
-    this.parentFrame = parentFrame;
+  public ImageBoundary(ResizedImage resizedImage) {
     this.resizedImage = resizedImage;
   }
 

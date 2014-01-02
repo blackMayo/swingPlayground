@@ -11,22 +11,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
-* Copyright (c) GMX GmbH, Muenchen, 2014. All rights reserved.
-* <p/>
-*
-* @author Ioanna Vletsou ioanna.vletsou@1und1.de
-*/
 public class MyPanel extends JPanel {
   private final ResizedImage resizedImage;
   private ImageBoundary imageBoundary;
-  private JFrame parentFrame;
 
-  public MyPanel(JFrame frame) throws IOException {
-    this.parentFrame = frame;
+  public MyPanel() throws IOException {
     BufferedImage image = getLeftImage();
-    resizedImage = new ResizedImage(parentFrame, image, getBounds());
-    imageBoundary = new ImageBoundary(parentFrame, resizedImage);
+
+    resizedImage = new ResizedImage(image, getBounds());
+    imageBoundary = new ImageBoundary(resizedImage);
   }
 
   private BufferedImage getLeftImage() throws IOException {
