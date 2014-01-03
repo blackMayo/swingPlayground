@@ -1,5 +1,6 @@
 package main.java.playground;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -16,11 +17,12 @@ class ImageBoundary {
   public void draw(Graphics2D g) {
     Graphics2D g2 = (Graphics2D) g.create();
 
-    g2.setColor(Color.CYAN);
+    g2.setColor(Color.PINK);
+    g2.setStroke(new BasicStroke(5));
     g2.draw(getRectangleAroundImage());
   }
 
-  private Rectangle getRectangleAroundImage() {
+  public Rectangle getRectangleAroundImage() {
     return resizedImage.getResizedBoundary();
   }
 
