@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 class ResizedImage {
+  public static final double PADDING = 0.1;
   private double newWidth;
   private double newHeight;
   private final BufferedImage image;
@@ -24,6 +25,10 @@ class ResizedImage {
     drawResizedImage(g2);
   }
 
+  private void drawResizedImage(Graphics2D g2) {
+    g2.drawImage(image, resizedBoundary.x, resizedBoundary.y, resizedBoundary.width, resizedBoundary.height, null);
+  }
+
   public void updateBoundary(Rectangle boundary) {
     this.boundary = boundary;
 
@@ -31,35 +36,12 @@ class ResizedImage {
     resizedBoundary = getResizedBoundary();
   }
 
-
   private void calculateNewImageSize() {
     if (getImageRatio() >= getTargetRatio()) {
       calculateDimensionsForImageRatioBiggerThatTargetRatio();
     } else {
       calculateDimensionsForImageRatioSmallerThatTargetRatio();
     }
-  }
-
-  private void drawResizedImage(Graphics2D g2) {
-    g2.drawImage(image, resizedBoundary.x, resizedBoundary.y, resizedBoundary.width, resizedBoundary.height, null);
-  }
-
-  private int calculateYCoordinate() {
-    return (int) Math.round((boundary.height - newHeight) / 2);
-  }
-
-  private int calculateXCoordinate() {
-    return (int) Math.round((boundary.width - newWidth) / 2);
-  }
-
-  private void calculateDimensionsForImageRatioSmallerThatTargetRatio() {
-    newHeight = (int) Math.round(boundary.height - (2 * 0.1 * boundary.height));
-    newWidth = newHeight * getImageRatio();
-  }
-
-  private void calculateDimensionsForImageRatioBiggerThatTargetRatio() {
-    newWidth = (int) Math.round(boundary.width - (2 * 0.1 * boundary.width));
-    newHeight = newWidth / getImageRatio();
   }
 
   private double getImageRatio() {
@@ -70,9 +52,26 @@ class ResizedImage {
     return (double) boundary.width / boundary.height;
   }
 
+  private void calculateDimensionsForImageRatioSmallerThatTargetRatio() {
+    newHeight = (int) Math.round(boundary.height - (2 * PADDING * boundary.height));
+    newWidth = newHeight * getImageRatio();
+  }
+
+  private void calculateDimensionsForImageRatioBiggerThatTargetRatio() {
+    newWidth = (int) Math.round(boundary.width - (2 * PADDING * boundary.width));
+    newHeight = newWidth / getImageRatio();
+  }
+
   public Rectangle getResizedBoundary() {
     return new Rectangle(calculateXCoordinate(), calculateYCoordinate(), (int) Math.round(newWidth),
         (int) Math.round(newHeight));
   }
 
+  private int calculateXCoordinate() {
+    return (int) Math.round((boundary.width - newWidth) / 2);
+  }
+
+  private int calculateYCoordinate() {
+    return (int) Math.round((boundary.height - newHeight) / 2);
+  }
 }
