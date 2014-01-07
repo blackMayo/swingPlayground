@@ -32,7 +32,7 @@ public class MyPanel extends JPanel {
   @Override
   public void setBounds(int x, int y, int width, int height) {
     super.setBounds(x, y, width, height);
-    resizedImage.updateBoundary(new Rectangle(x, y, Math.round(width), height));
+    resizedImage.updateBoundary(new Rectangle(x, y, width, height));
    // resizedImage2.updateBoundary(new Rectangle((x + Math.round(width/2)), y, Math.round(width/2), height));
   }
 

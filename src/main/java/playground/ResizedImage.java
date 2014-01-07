@@ -1,9 +1,7 @@
 package main.java.playground;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
 
 class ResizedImage {
   public static final double PADDING = 0.1;
@@ -64,14 +62,14 @@ class ResizedImage {
 
   public Rectangle getResizedBoundary() {
     return new Rectangle(calculateXCoordinate(), calculateYCoordinate(), (int) Math.round(newWidth),
-        (int) Math.round(newHeight));
+            (int) Math.round(newHeight));
   }
 
   private int calculateXCoordinate() {
-    return (int) Math.round((boundary.width - newWidth) / 2);
+    return (int) Math.round(boundary.x + (boundary.width - newWidth) / 2);
   }
 
   private int calculateYCoordinate() {
-    return (int) Math.round((boundary.height - newHeight) / 2);
+    return (int) Math.round(boundary.y + (boundary.height - newHeight) / 2);
   }
 }
