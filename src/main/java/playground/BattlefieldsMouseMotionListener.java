@@ -4,36 +4,49 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputAdapter;
 
 class BattlefieldsMouseMotionListener extends MouseInputAdapter {
-  private boolean mouseLiesWithinImageBoundaries;
-  private final ImageBoundary imageBoundary;
+  private boolean mouseLiesWithinLeftImageBoundaries;
+  private final ImageBoundary leftImageBoundary;
+  private final ImageBoundary rightImageBoundary;
   private MyPanel myPanel;
+  private boolean mouseLiesWithinRightImageBoundaries;
 
-  public BattlefieldsMouseMotionListener(ImageBoundary imageBoundary, MyPanel myPanel) {
-    this.imageBoundary = imageBoundary;
+  public BattlefieldsMouseMotionListener(ImageBoundary leftImageBoundary, ImageBoundary rightImageBoundary, MyPanel myPanel) {
+    this.leftImageBoundary = leftImageBoundary;
+    this.rightImageBoundary = rightImageBoundary;
     this.myPanel = myPanel;
   }
 
-  public boolean isMouseWithinImageBoundaries() {
-    return mouseLiesWithinImageBoundaries;
+  public boolean isMouseWithinLeftImageBoundaries() {
+    return mouseLiesWithinLeftImageBoundaries;
+  }
+
+  public boolean isMouseWithinRightImageBoundaries() {
+    return mouseLiesWithinRightImageBoundaries;
   }
 
   @Override
   public void mouseMoved(MouseEvent mouseEvent) {
-    mouseLiesWithinImageBoundaries = isMousePositionInsideOfImageBounds(mouseEvent);
+    mouseLiesWithinLeftImageBoundaries = isMousePositionInsideOfLeftImageBounds(mouseEvent);
+    mouseLiesWithinRightImageBoundaries = isMousePositionInsideOfRightImageBounds(mouseEvent);
     myPanel.repaint();
   }
 
-  private boolean isMousePositionInsideOfImageBounds(MouseEvent mouseEvent) {
-    return isMousePositionWithinRangeOfXAxes(mouseEvent.getX()) &&
-        isMousePositionWithinRangeOfYAxes(mouseEvent.getY());
+  private boolean isMousePositionInsideOfRightImageBounds(MouseEvent mouseEvent) {
+    return isMousePositionWithinRangeOfXAxes(mouseEvent.getX(), rightImageBoundary) &&
+            isMousePositionWithinRangeOfYAxes(mouseEvent.getY(), rightImageBoundary);
   }
 
-  private boolean isMousePositionWithinRangeOfYAxes(int mousePositionOnYAxis) {
+  private boolean isMousePositionInsideOfLeftImageBounds(MouseEvent mouseEvent) {
+    return isMousePositionWithinRangeOfXAxes(mouseEvent.getX(), leftImageBoundary) &&
+        isMousePositionWithinRangeOfYAxes(mouseEvent.getY(), leftImageBoundary);
+  }
+
+  private boolean isMousePositionWithinRangeOfYAxes(int mousePositionOnYAxis, ImageBoundary imageBoundary) {
     return (mousePositionOnYAxis >= imageBoundary.getY()) &&
         (mousePositionOnYAxis <= (imageBoundary.getY() + imageBoundary.getHeight()));
   }
 
-  private boolean isMousePositionWithinRangeOfXAxes(int mousePositionOnXAxis) {
+  private boolean isMousePositionWithinRangeOfXAxes(int mousePositionOnXAxis, ImageBoundary imageBoundary) {
     return (mousePositionOnXAxis >= imageBoundary.getX()) &&
         (mousePositionOnXAxis <= (imageBoundary.getX() + imageBoundary.getWidth()));
   }
