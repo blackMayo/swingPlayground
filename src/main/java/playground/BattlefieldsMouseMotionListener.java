@@ -4,10 +4,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputAdapter;
 
 class BattlefieldsMouseMotionListener extends MouseInputAdapter {
-  private boolean mouseLiesWithinLeftImageBoundaries;
+  private MyPanel myPanel;
   private final ImageBoundary leftImageBoundary;
   private final ImageBoundary rightImageBoundary;
-  private MyPanel myPanel;
+  private boolean mouseLiesWithinLeftImageBoundaries;
   private boolean mouseLiesWithinRightImageBoundaries;
 
   public BattlefieldsMouseMotionListener(ImageBoundary leftImageBoundary, ImageBoundary rightImageBoundary, MyPanel myPanel) {
